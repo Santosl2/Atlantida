@@ -21,12 +21,19 @@ $page = $_SERVER['REQUEST_URI'] ?? $_SERVER['PHP_SELF'];
                 <div class="menu__title"> Dashboard</div>
             </a>
         </li>
+
+
+        <?php 
+        if(User::userData('payment_ok') == "1"):
+        ?>
         <li>
             <a href="planos" class="menu">
                 <div class="menu__icon"><i data-feather="inbox"></i></div>
                 <div class="menu__title"> Planos</div>
             </a>
         </li>
+
+        <?php endif;?>
     </ul>
 </div>
 <!-- END: Mobile Menu -->
@@ -57,13 +64,13 @@ $page = $_SERVER['REQUEST_URI'] ?? $_SERVER['PHP_SELF'];
                     <div class="side-menu__title"> Planos</div>
                 </a>
             </li>
-        <?php endif;?>
-           
+            <?php endif;?>
+
 
             <?php 
              if(User::userData('plan') > 180):
             ?>
-             <!--<li>
+            <!--<li>
                 <a href="produtos"
                     class="side-menu <?= Site::strContains($page, 'produtos') ? 'side-menu--active' : "";?>">
                     <div class="side-menu__icon"><i data-feather="inbox"></i></div>
@@ -71,7 +78,7 @@ $page = $_SERVER['REQUEST_URI'] ?? $_SERVER['PHP_SELF'];
                 </a>
             </li>-->
             <?php endif;?>
-            
+
         </ul>
     </nav>
     <!-- END: Side Menu -->
