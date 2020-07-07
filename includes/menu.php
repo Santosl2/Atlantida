@@ -57,18 +57,21 @@ $page = $_SERVER['REQUEST_URI'] ?? $_SERVER['PHP_SELF'];
                     <div class="side-menu__title"> Planos</div>
                 </a>
             </li>
-            <?php endif;?>
+        <?php endif;?>
+           
+
             <?php 
              if(User::userData('plan') > 180):
             ?>
-            <li>
+             <!--<li>
                 <a href="produtos"
                     class="side-menu <?= Site::strContains($page, 'produtos') ? 'side-menu--active' : "";?>">
                     <div class="side-menu__icon"><i data-feather="inbox"></i></div>
                     <div class="side-menu__title"> Produtos</div>
                 </a>
-            </li>
+            </li>-->
             <?php endif;?>
+            
         </ul>
     </nav>
     <!-- END: Side Menu -->
