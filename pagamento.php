@@ -40,7 +40,7 @@ Site::needLogin(true);
         <!-- END: Top Bar -->
         <!-- BEGIN: Pricing Layout -->
         <div class="rounded-md flex items-center px-5 py-4 mb-2 border border-theme-9 text-theme-9">
-            <i data-feather="alert-triangle" class="w-6 h-6 mr-2"></i> Total da compra R$<?= number_format($_SESSION['amountPurchase'], 2) ?? "0,00";?> </div>
+            <i data-feather="alert-triangle" class="w-6 h-6 mr-2"></i> Total da compra R$<?= isset($_SESSION['amountPurchase']) ? number_format($_SESSION['amountPurchase'], 2) : "180,00";?> </div>
         <div class="intro-y box flex flex-col lg:flex-row mt-5 mb-5">
             <div class="intro-y flex-1 px-5 py-px">
             <form data-single="true" action="./file-upload" class="dropzone border-gray-200 border-dashed">

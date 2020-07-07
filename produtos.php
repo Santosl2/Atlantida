@@ -6,6 +6,8 @@ if(User::userData('plan') <= 180 && User::userData('payment_ok') != "1"){
 header("LOCATION: ./dashboard");
 exit;
 }
+
+$valuePlan = User::userData('plan') - ($config['plansVouchers'][User::userData('plan')] * $config['voucherValue']);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -49,31 +51,15 @@ exit;
         <!-- BEGIN: Pricing Layout -->
         <div class="rounded-md flex items-center px-5 py-4 mb-2 border border-theme-9 text-theme-9"> <i
                 data-feather="alert-triangle" class="w-6 h-6 mr-2"></i> Compra mínima no pacote <span id="actualPrice">
-                R$<?= number_format(User::userData('plan'), 2);?></span></div>
+                R$<?= number_format($valuePlan, 2);?></span></div>
         <form method="POST" action="" id="submitFormPay">
             <div class="intro-y box flex flex-col lg:flex-row mt-5">
                 <div class="intro-y flex-1 px-5 py-px">
                     <div class="select_products">
                         <div class="select_products_col_one">
 
-                    <?php 
-                    if(Produtos::getAll()->rowCount() > 0):
-                                
-                        foreach(Produtos::getAll()->fetchAll(PDO::FETCH_ASSOC) as $key => $value):
-                            $peso = isset($value['peso']) ? "- " .$value['peso'] : "";
-                            //$classDiv = $key >= 1 && $key <= 2 ? "select_products_col_one" :  $key >= ;
-                    ?>
-                        
-                            <div class="product">
-                                <div class="mt-3">
-                                    <label class="flex flex-col sm:flex-row"> <?= $value['nome'];?> <?=$peso;?> </label>
-                                    <input type="number" name="age" class="input w-full border mt-2" value="0" min="0"
-                                        required></div>
-                                <label class="flex flex-col sm:flex-row mt-1"> Preço: R$<?= $value['preco'];?></label>
-                            </div>
-                            
-                                <?php endforeach; endif;?>
-                            <!--
+                   
+                           
                             <div class="product">
                                 <div class="mt-3">
                                     <label class="flex flex-col sm:flex-row"> Fluxo Max - 500ml </label>
@@ -373,7 +359,7 @@ exit;
                                     <input type="number" name="age" class="input w-full border mt-2" value="0" min="0"
                                         required></div>
                                 <label class="flex flex-col sm:flex-row mt-1"> Preço: R$240,00 </label>
-                            </div>-->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -418,7 +404,7 @@ exit;
         var key = e.keyCode || e.which;
         var div = $("#calculate");
         var calculate = parseFloat(div.html().replace('R$', ''));
-        var limit = '<?= User::userData('plan');?>'
+        var limit = '<?=$valuePlan;?>'
         var data = $(this).data('last');
         var value = parseFloat($(this).val()) || 0;
         $(this).data('last', value);
@@ -447,7 +433,7 @@ exit;
 
         if (add < limit) {
             $("#onLimit")?.html("  | <b>Valor muito baixo!</b>");
-            //$("#submitForm").addClass('disabled').prop('disabled', true);
+            $("#preloaderBtn").addClass('disabled').prop('disabled', true);
         }
 
         div?.html(add);
