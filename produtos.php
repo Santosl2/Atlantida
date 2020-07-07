@@ -399,8 +399,8 @@ $valuePlan = User::userData('plan') - ($config['plansVouchers'][User::userData('
 
                     objectItens.push({
                         "productName": productName,
-                        "peso": weight ?? 0,
-                        "quantidade": amount
+                        "productWeight": weight ?? 0,
+                        "productAmount": amount
                     });
                     
                 }
@@ -408,7 +408,7 @@ $valuePlan = User::userData('plan') - ($config['plansVouchers'][User::userData('
 
             var formData = new FormData();
             formData.append('price', data);
-            formData.append('products',objectItens);
+            formData.append('products',JSON.stringify(objectItens));
             axios.post('./dist/ajax/sendPrice.php', formData, optionsAxios)
             .then((response)=>{
                     if(response.data.message == 'OK')
