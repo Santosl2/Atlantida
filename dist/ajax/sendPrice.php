@@ -10,6 +10,8 @@ $price = $_POST['price'] ?? 0;
 // Não deixa passar do limite //
 //if($price >= User::userData('plan')) $price = User::userData('plan');
 
+var_dump($_POST['products']);
+return;
 if(User::updateUsed($price)){
     $data['message'] = 'OK';
 }

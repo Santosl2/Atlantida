@@ -378,13 +378,37 @@ $valuePlan = User::userData('plan') - ($config['plansVouchers'][User::userData('
     <?php include(__DIR__ . "/includes/footer.php") ?>
     <script type="text/javascript">
     $(document).ready(function() {
+        
         $('form#submitFormPay').on('submit', function(e) {
             e.preventDefault();
+            let objectItens = [];
             const data = parseFloat($("#calculate").text().replace('R$', ''));
+
+            var inputNmb = $('input[type=number]');
+            
+            inputNmb.each(function(e){
+                var amount = $(this).val();
+                if(amount > 0)
+                {
+                    var productName = $(this).parent().text().replace(" ", "");
+                    var after = productName.indexOf("-");
+                    if(after != -1){
+                        var weight = productName.substring(after + 1);
+                        productName = productName.substring(0, after);
+                    }
+
+                    objectItens.push({
+                        "productName": productName,
+                        "peso": weight ?? 0,
+                        "quantidade": amount
+                    });
+                    
+                }
+            });
 
             var formData = new FormData();
             formData.append('price', data);
-
+            formData.append('products',objectItens);
             axios.post('./dist/ajax/sendPrice.php', formData, optionsAxios)
             .then((response)=>{
                     if(response.data.message == 'OK')
