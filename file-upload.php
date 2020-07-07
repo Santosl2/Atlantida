@@ -1,0 +1,28 @@
+<?php 
+require_once("./includes/core.php");
+if(!Site::ajaxRequest()) die(header("HTTP/1.0 404 Not Found"));
+
+if(isset($_FILES['file'], $_POST['type']))
+{
+    $type = Site::filter($_POST['type']) ?? 'ted';
+    $time = time();
+    $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+    $newName =  './comprovante/'.uniqid(rand(0, 500)) . '.'. $ext;
+
+    try {
+        move_uploaded_file($_FILES['file']['tmp_name'], $newName);
+        
+        $query = $dbh->prepare("INSERT INTO `comprovante`(`fileURL`, `user`, `paymentType`, `published`) VALUES (:file,:uid, :paymentType, :pub)");
+        $query->bindParam(":file", $newName);
+        $query->bindParam(":uid", $_SESSION['username']);
+        $query->bindParam(":paymentType", $type);
+        $query->bindParam(":pub", $time);
+        $query->execute();
+
+    } catch(Exception $e)
+    {
+        echo $e;
+    }
+}
+exit;
+?>

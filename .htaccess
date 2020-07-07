@@ -1,0 +1,9 @@
+RewriteEngine on 
+
+RewriteRule ^index$ index.php
+RewriteRule ^register$ register.php
+RewriteRule ^planos$ planos.php
+RewriteRule ^dashboard$ dashboard.php
+RewriteRule ^pagamento$ pagamento.php
+RewriteRule ^produtos$ produtos.php
+RewriteRule ^register/(.*)$ register.php?u=$1
