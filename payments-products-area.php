@@ -57,21 +57,26 @@ if(User::userData('admin') == "false")
             </thead>
             <tbody>
             <tr>
+            <?php 
+                    if(Admin::getPaymentsProducts()->rowCount() > 0):
+                        foreach(Admin::getPaymentsProducts() as $key => $value):
+                ?>
                 <td class="border-b">
-                    <div class="font-medium whitespace-no-wrap">ericdchahn</div>
-                    <div class="text-gray-600 text-xs whitespace-no-wrap">ericdchahn@gmail.com</div>
+                    <div class="font-medium whitespace-no-wrap"><?=$value['username'];?></div>
+                    <div class="text-gray-600 text-xs whitespace-no-wrap"><?=$value['email'];?></div>
                 </td>
-                <td class="text-center border-b">50</td>
-                <td class="text-center border-b">R$ 5.000,00</td>
+                <td class="text-center border-b"><?=$value['produtosTotal'];?></td>
+                <td class="text-center border-b">R$ <?= number_format($value['total'],2);?></td>
                 <td class="w-40 border-b">
-                    <div class="flex items-center sm:justify-center">Aceito</div>
+                    <div class="flex items-center sm:justify-center"><?= $value['payStts'];?></div>
                 </td>
                 <td class="border-b w-5">
                     <div class="flex sm:justify-center items-center">
-                        <button class="button w-24 rounded-full mr-1 mb-2 bg-theme-9 text-white" id="submit">Aceitar</button>
-                        <button class="button w-24 rounded-full mr-1 mb-2 bg-theme-6 text-white" id="rescue">Recusar</button>
+                        <button class="button w-24 rounded-full mr-1 mb-2 bg-theme-9 text-white" id="submit" data-id="<?= $value['paymentId']?>" data-value='1'>Aceitar</button>
+                        <button class="button w-24 rounded-full mr-1 mb-2 bg-theme-6 text-white" id="submit" data-id="<?= $value['paymentId']?>" data-value='2'>Recusar</button>
                     </div>
                 </td>
+                <?php endforeach;endif;?>
             </tr>
             </tbody>
         </table>
@@ -84,12 +89,21 @@ if(User::userData('admin') == "false")
 <?php include(__DIR__ . "/includes/footer.php") ?>
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#submit').on('click', function(e) {
-            e.preventDefault();
+        $(document).on('click', '#submit', function(e) {
+            
+           let id = $(this).data('id');
+            let stts = $(this).data('value');
+           var formData = new FormData();
+           formData.append('id', id);
+           formData.append('stts', stts);
+            axios.post('./dist/ajax/aproveProducts.php', formData, optionsAxios)
+            .then((response)=>{
 
                         
             });
+
         });
-        </script>
+    });
+    </script>
 </body>
 </html>
