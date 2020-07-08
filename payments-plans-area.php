@@ -48,6 +48,7 @@ if(User::userData('admin') == "false")
         <!-- END: Top Bar -->
         <!-- BEGIN: Datatable -->
         <div class="intro-y datatable-wrapper box p-5 mt-5">
+        <div class="rounded-md px-5 py-4 mb-2 bg-theme-9 text-white" id="alert" style="display:none">Sucesso!</div>
             <table class="table table-report table-report--bordered display datatable w-full">
                 <thead>
                     <tr>
@@ -116,8 +117,10 @@ if(User::userData('admin') == "false")
            formData.append('stts', stts);
             axios.post('./dist/ajax/aprovePlan.php', formData, optionsAxios)
             .then((response)=>{
-
-                        
+                $("#alert").fadeIn();
+                setTimeout(function(){
+                    document.location.reload(true);
+                }, 2000);
             });
 
         });
