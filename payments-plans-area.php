@@ -62,12 +62,13 @@ if(User::userData('admin') == "false")
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <?php 
+                <?php 
                     if(Admin::getPaymentsPlan()->rowCount() > 0):
                         foreach(Admin::getPaymentsPlan() as $key => $value):
                 ?>
 
+                    <tr>
+                   
                         <td class="border-b">
                             <div class="font-medium whitespace-no-wrap"><?= $value['username'];?></div>
                             <div class="text-gray-600 text-xs whitespace-no-wrap"><?=$value['email'];?></div>
@@ -90,13 +91,14 @@ if(User::userData('admin') == "false")
                         <td class="border-b w-5">
                             <div class="flex sm:justify-center items-center">
                                 <button class="button w-24 rounded-full mr-1 mb-2 bg-theme-9 text-white"
-                                    id="accept" data-id="<?= $value['id']?>" data-value='1'>Aceitar</button>
+                                    id="accept" data-id="<?= $value['id']?>" data-value='1' data-plan="<?=$value['planValue'];?>">Aceitar</button>
                                 <button class="button w-24 rounded-full mr-1 mb-2 bg-theme-6 text-white"
-                                    id="accept" data-id="<?= $value['id']?>" data-value='2'>Recusar</button>
+                                    id="accept" data-id="<?= $value['id']?>" data-value='2' data-plan="<?=$value['planValue'];?>">Recusar</button>
                             </div>
                         </td>
-                        <?php endforeach;endif;?>
+                       
                     </tr>
+                    
                 </tbody>
             </table>
         </div>
@@ -111,10 +113,13 @@ if(User::userData('admin') == "false")
         $(document).on('click', '#accept', function(e) {
             
            let id = $(this).data('id');
-            let stts = $(this).data('value');
+           let stts = $(this).data('value');
+           let plan = $(this).data('plan');
+
            var formData = new FormData();
            formData.append('id', id);
            formData.append('stts', stts);
+           formData.append('plan', stts);
             axios.post('./dist/ajax/aprovePlan.php', formData, optionsAxios)
             .then((response)=>{
                 $("#alert").fadeIn();

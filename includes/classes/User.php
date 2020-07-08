@@ -125,6 +125,21 @@ class User {
         return $query->rowCount() > 0;
     }
 
+    public static function setPlan($plan = 0,$username = null){
+        global $dbh;
+        if($username == null || $plan <= 0) return false;
+        try {
+            $query = $dbh->prepare("UPDATE users SET plan = :plan WHERE username = :username");
+            $query->bindParam(":plan", $plan);
+            $query->bindParam(":username", $username);
+            $query->execute();
+        } catch(PDOException $e){
+            return false;
+        }
+
+        return true;
+    }
+
     public static function setActive($username = null){
         global $dbh;
         if($username == null) return false;
@@ -171,8 +186,6 @@ class User {
 
         return $query->fetchAll(PDO::FETCH_ASSOC)[0]['id'] ?? 0;
     }
-
-
     public static function updateUsed($used = 0){
         global $dbh;
         if(!self::isLogged()) return false;

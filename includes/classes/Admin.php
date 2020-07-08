@@ -92,7 +92,8 @@ class Admin {
         WHEN '2' THEN 'Recusado' 
         END payStts,
         SUM(p.produtValue) AS total, 
-        SUM(p.productAmount) AS produtosTotal 
+        SUM(p.productAmount) AS produtosTotal,
+        COUNT(*) AS itens
         FROM user_products p 
         INNER JOIN users u 
         ON u.username = p.username GROUP by p.paymentId");

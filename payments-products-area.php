@@ -58,17 +58,18 @@ if(User::userData('admin') == "false")
             </tr>
             </thead>
             <tbody>
-            <tr>
             <?php 
                     if(Admin::getPaymentsProducts()->rowCount() > 0):
                         foreach(Admin::getPaymentsProducts() as $key => $value):
                 ?>
+            <tr>
+           
                 <td class="border-b">
                     <div class="font-medium whitespace-no-wrap"><?=$value['username'];?></div>
                     <div class="text-gray-600 text-xs whitespace-no-wrap"><?=$value['email'];?></div>
                 </td>
                 <td class="text-center border-b"><?=$value['produtosTotal'];?></td>
-                <td class="text-center border-b">R$ <?= number_format($value['total'] * $value['produtosTotal'],2);?></td>
+                <td class="text-center border-b">R$ <?= number_format(($value['total'] * $value['produtosTotal']) / $value['itens'],2);?></td>
                 <td class="w-40 border-b">
                     <div class="flex items-center sm:justify-center"><?= $value['payStts'] ?? "Aguardando";?></div>
                 </td>
@@ -78,8 +79,9 @@ if(User::userData('admin') == "false")
                         <button class="button w-24 rounded-full mr-1 mb-2 bg-theme-6 text-white" id="submit" data-id="<?= $value['paymentId']?>" data-value='2'>Recusar</button>
                     </div>
                 </td>
-                <?php endforeach;endif;?>
+               
             </tr>
+            <?php endforeach;endif;?>
             </tbody>
         </table>
     </div>
