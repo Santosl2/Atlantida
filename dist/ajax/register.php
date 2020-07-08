@@ -1,4 +1,5 @@
 <?php 
+header("Access-Control-Allow-Origin: *");
 require_once("../../includes/core.php");
 
 if(!Site::ajaxRequest() || User::isLogged()) die(header("HTTP/1.0 404 Not Found"));
@@ -53,7 +54,7 @@ if(!filter_var($email, FILTER_VALIDATE_EMAIL))
 {
     $data['type'] = "error";
     $data['message'] = "O tipo de pessoa específicado está incorreto."; 
-} else if(strlen($username) < 4 || strlen($username) > 24 || !ctype_alnum($username))
+} else if(strlen($username) < 4 || strlen($username) > 34 || !ctype_alnum($username))
 {
     $data['type'] = "error";
     $data['message'] = "Use 24 caracteres ou menos (min.: 4) para o seu nome de usuário. (Apenas letras e números)"; 
