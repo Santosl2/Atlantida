@@ -15,7 +15,7 @@ if($produtos != null):
     $produtos = json_decode($produtos);
     
     try {
-
+        $_SESSION['userProducts'] = $produtos;
         foreach($produtos as $key => $value):
 
             if(!Produtos::addProduct($value->productName, $value->productPrice, $value->productAmount, $value->productWeight))

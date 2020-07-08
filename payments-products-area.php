@@ -68,8 +68,8 @@ if(User::userData('admin') == "false")
                 </td>
                 <td class="border-b w-5">
                     <div class="flex sm:justify-center items-center">
-                        <button class="button w-24 rounded-full mr-1 mb-2 bg-theme-9 text-white">Aceitar</button>
-                        <button class="button w-24 rounded-full mr-1 mb-2 bg-theme-6 text-white">Recusar</button>
+                        <button class="button w-24 rounded-full mr-1 mb-2 bg-theme-9 text-white" id="submit">Aceitar</button>
+                        <button class="button w-24 rounded-full mr-1 mb-2 bg-theme-6 text-white" id="rescue">Recusar</button>
                     </div>
                 </td>
             </tr>
@@ -82,5 +82,14 @@ if(User::userData('admin') == "false")
 <!-- END: Content -->
 </div>
 <?php include(__DIR__ . "/includes/footer.php") ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#submit').on('click', function(e) {
+            e.preventDefault();
+
+                        
+            });
+        });
+        </script>
 </body>
 </html>

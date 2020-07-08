@@ -125,7 +125,36 @@ class User {
         return $query->rowCount() > 0;
     }
 
-    
+    public static function setActive($username = null){
+        global $dbh;
+        if($username == null) return false;
+        try {
+            $query = $dbh->prepare("UPDATE users SET payment_ok = '1' WHERE username = :username");
+            $query->bindParam(":username", $username);
+            $query->execute();
+        } catch(PDOException $e){
+            return false;
+        }
+
+        return true;
+    }
+
+    public static function getLastComprovante()
+    {
+        global $dbh;
+        try 
+        {
+        $query = $dbh->prepare("SELECT `id` FROM `comprovante` WHERE user = :username ORDER by id DESC limit 1");
+        $query->bindParam(":username", $_SESSION['username']);
+        $query->execute();
+        } catch(Exception $e)
+        {
+            return false;
+        }
+
+        return $query->fetchAll(PDO::FETCH_ASSOC)[0]['id'] ?? 0;
+    }
+
     public static function getUserPaymentId($value = 180)
     {
         global $dbh;
