@@ -66,9 +66,9 @@ if(User::userData('admin') == "false")
                     <div class="text-gray-600 text-xs whitespace-no-wrap"><?=$value['email'];?></div>
                 </td>
                 <td class="text-center border-b"><?=$value['produtosTotal'];?></td>
-                <td class="text-center border-b">R$ <?= number_format($value['total'],2);?></td>
+                <td class="text-center border-b">R$ <?= number_format($value['total'] * $value['produtosTotal'],2);?></td>
                 <td class="w-40 border-b">
-                    <div class="flex items-center sm:justify-center"><?= $value['payStts'];?></div>
+                    <div class="flex items-center sm:justify-center"><?= $value['payStts'] ?? "Aguardando";?></div>
                 </td>
                 <td class="border-b w-5">
                     <div class="flex sm:justify-center items-center">
