@@ -64,13 +64,19 @@ if(User::userData('admin') == "false")
                     <div class="font-medium whitespace-no-wrap">ericdchahn</div>
                     <div class="text-gray-600 text-xs whitespace-no-wrap">ericdchahn@gmail.com</div>
                 </td>
-                <td class="text-center border-b">Imperador</td>
-                <td class="text-center border-b">R$ 48.800,00</td>
-                <td class="text-center border-b">45</td>
+
+                <?php 
+                    if(Admin::getPaymentsPlan()->rowCount() > 0):
+                        foreach(Admin::getPaymentsPlan() as $key => $value):
+                ?>
+
+                <td class="text-center border-b"><?=$value['planName'];?></td>
+                <td class="text-center border-b">R$ <?= number_format($value['planValue'],2);?></td>
+                <td class="text-center border-b"><?=$value['vouchers'];?></td>
                 <td class="text-center border-b">
                     <center>
-                        <a href="comprovante/comprovante-residencia-usuario-Elo100-id-usuario-5.jpg" target="_blank">
-                            <img src="comprovante/comprovante-residencia-usuario-Elo100-id-usuario-5.jpg" width="60">
+                        <a href="<?=$value['fileURL'];?>" target="_blank">
+                            <img src="<?=$value['fileURL'];?>" width="60">
                         </a>
                     </center>
                 </td>
@@ -83,6 +89,7 @@ if(User::userData('admin') == "false")
                         <button class="button w-24 rounded-full mr-1 mb-2 bg-theme-6 text-white">Recusar</button>
                     </div>
                 </td>
+                        <?php endforeach;endif;?>
             </tr>
             </tbody>
         </table>
