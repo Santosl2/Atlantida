@@ -91,7 +91,7 @@ class Admin {
         WHEN '1' THEN 'Aprovado' 
         WHEN '2' THEN 'Recusado' 
         END payStts,
-        SUM(p.productAmount) AS total, 
+        SUM(p.produtValue) AS total, 
         SUM(p.productAmount) AS produtosTotal 
         FROM user_products p 
         INNER JOIN users u 
