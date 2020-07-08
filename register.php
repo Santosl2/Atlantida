@@ -1,7 +1,7 @@
 
 <?php require_once('./includes/core.php');
 
-$userRefer = filter_var($_GET['u'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH) ?? null;
+$userRefer = isset($_GET['u']) ?filter_var($_GET['u'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH) : null;
 
 ?>
 <!DOCTYPE html>
