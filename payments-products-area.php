@@ -1,5 +1,10 @@
 <?php
 REQUIRE_ONCE __DIR__ . "/includes/core.php";
+if(User::userData('admin') == "false")
+{
+    header("LOCATION: ./dashboard");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

@@ -34,6 +34,23 @@ $page = $_SERVER['REQUEST_URI'] ?? $_SERVER['PHP_SELF'];
         </li>
 
         <?php endif;?>
+
+        <?php 
+        if(User::userData('admin') == "true"):
+        ?>
+         <li>
+            <a href="payments-products-area" class="menu">
+                <div class="menu__icon"><i data-feather="inbox"></i></div>
+                <div class="menu__title"> Pedidos Produtos</div>
+            </a>
+        </li>
+        <li>
+            <a href="payments-plans-area" class="menu">
+                <div class="menu__icon"><i data-feather="inbox"></i></div>
+                <div class="menu__title"> Pedidos Planos</div>
+            </a>
+        </li>
+        <?php endif;?>
     </ul>
 </div>
 <!-- END: Mobile Menu -->
@@ -64,6 +81,26 @@ $page = $_SERVER['REQUEST_URI'] ?? $_SERVER['PHP_SELF'];
                     <div class="side-menu__title"> Planos</div>
                 </a>
             </li>
+            <?php endif;?>
+
+            <?php 
+        if(User::userData('admin') == "true"):
+        ?>
+
+
+            <li>
+                <a href="payments-products-area" class="side-menu">
+                    <div class="side-menu__icon"><i data-feather="inbox"></i></div>
+                    <div class="side-menu__title"> Pedidos Produtos</div>
+                </a>
+            </li>
+            <li>
+                <a href="payments-plans-area" class="side-menu">
+                    <div class="side-menu__icon"><i data-feather="inbox"></i></div>
+                    <div class="side-menu__title"> Pedidos Planos</div>
+                </a>
+            </li>
+
             <?php endif;?>
 
 

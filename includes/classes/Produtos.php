@@ -23,7 +23,7 @@ class Produtos {
         try {
             $query = $dbh->prepare("INSERT INTO `user_products`
             (`userName`, `status`, `produtName`, `produtValue`, `productAmount`, `productWeight`) 
-            VALUES (:userName, 0, :pName, :pValue, :amount, :weight) ");
+            VALUES (:userName, '0', :pName, :pValue, :amount, :weight) ");
             $query->bindParam(":userName", $_SESSION['username'], PDO::PARAM_STR);
             $query->bindParam(":pName", $name, PDO::PARAM_STR);
             $query->bindParam(":pValue", $value, PDO::PARAM_INT);

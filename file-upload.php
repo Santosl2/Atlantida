@@ -4,6 +4,7 @@ if(!Site::ajaxRequest()) die(header("HTTP/1.0 404 Not Found"));
 
 if(isset($_FILES['file'], $_POST['type']))
 {
+    
     $type = Site::filter($_POST['type']) ?? 'ted';
     $time = time();
     $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);

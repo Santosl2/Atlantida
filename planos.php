@@ -135,8 +135,9 @@ if(User::userData('plan') <= 180 && User::userData('payment_ok') != "1"){
     {
         $(document).on('click', 'button[type=button]', function(){
             var planId = $(this).attr('data-value');
-            const Form = new FormData();
+            const planName = $(this).prev().prev().prev().prev().text().trim();
             Form.append("planId", planId);
+            Form.append("planName", planName);
             axios.post('./dist/ajax/planSelect.php', Form, optionsAxios)
             .then((data)=>{
                 window.location.href="./produtos";

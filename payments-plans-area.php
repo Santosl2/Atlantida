@@ -1,5 +1,11 @@
 <?php
 REQUIRE_ONCE __DIR__ . "/includes/core.php";
+
+if(User::userData('admin') == "false")
+{
+    header("LOCATION: ./dashboard");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -47,6 +53,7 @@ REQUIRE_ONCE __DIR__ . "/includes/core.php";
                 <th class="border-b-2 text-center whitespace-no-wrap">Plano</th>
                 <th class="border-b-2 text-center whitespace-no-wrap">Valor do Plano</th>
                 <th class="border-b-2 text-center whitespace-no-wrap">Vouchers</th>
+                <th class="border-b-2 text-center whitespace-no-wrap">Comprovante</th>
                 <th class="border-b-2 text-center whitespace-no-wrap">Status</th>
                 <th class="border-b-2 text-center whitespace-no-wrap">Ações</th>
             </tr>
@@ -60,6 +67,13 @@ REQUIRE_ONCE __DIR__ . "/includes/core.php";
                 <td class="text-center border-b">Imperador</td>
                 <td class="text-center border-b">R$ 48.800,00</td>
                 <td class="text-center border-b">45</td>
+                <td class="text-center border-b">
+                    <center>
+                        <a href="comprovante/comprovante-residencia-usuario-Elo100-id-usuario-5.jpg" target="_blank">
+                            <img src="comprovante/comprovante-residencia-usuario-Elo100-id-usuario-5.jpg" width="60">
+                        </a>
+                    </center>
+                </td>
                 <td class="w-40 border-b">
                     <div class="flex items-center sm:justify-center">Aceito</div>
                 </td>

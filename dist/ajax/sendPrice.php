@@ -18,7 +18,7 @@ if($produtos != null):
 
         foreach($produtos as $key => $value):
 
-            if(!Produtos::addProduct($value->productName, "0", $value->productAmount, $value->productWeight))
+            if(!Produtos::addProduct($value->productName, $value->productPrice, $value->productAmount, $value->productWeight))
                 return false;
         endforeach;
 

@@ -6,4 +6,7 @@ RewriteRule ^planos$ planos.php
 RewriteRule ^dashboard$ dashboard.php
 RewriteRule ^pagamento$ pagamento.php
 RewriteRule ^produtos$ produtos.php
+RewriteRule ^first-plan$ first-plan.php
+RewriteRule ^payments-plans-area$ payments-plans-area.php
+RewriteRule ^payments-products-area$ payments-products-area.php
 RewriteRule ^register/(.*)$ register.php?u=$1

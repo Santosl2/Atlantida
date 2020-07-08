@@ -54,7 +54,7 @@
     flex-wrap: wrap;
     width: 100%;
     height: 600px;
-    background-color:#1C3FAA;
+    background-color:#084a37;
     margin-top: 10px;
     margin-bottom: 10px;
 }
@@ -109,7 +109,7 @@
 }
 
 .information_bank_header {
-    background-color: #1C3FAA;
+    background-color: #084a37;
     padding: 15px 20px;
     color: #FFF;
 }

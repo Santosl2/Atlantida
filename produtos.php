@@ -390,6 +390,7 @@ $valuePlan = User::userData('plan') - ($config['plansVouchers'][User::userData('
                 var amount = $(this).val();
                 if(amount > 0)
                 {
+                    var itemPrice = parseFloat($(this).parent().next()?.html().replace('R$', '').replace('Preço: ', ''));
                     var productName = $(this).parent().text().replace(" ", "");
                     var after = productName.indexOf("-");
                     if(after != -1){
@@ -398,8 +399,9 @@ $valuePlan = User::userData('plan') - ($config['plansVouchers'][User::userData('
                     }
 
                     objectItens.push({
-                        "productName": productName,
+                        "productName": productName.trim(),
                         "productWeight": weight ?? 0,
+                        "productPrice": itemPrice,
                         "productAmount": amount
                     });
                     
