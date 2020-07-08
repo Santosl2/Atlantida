@@ -15,7 +15,8 @@ $plans = [
     5 => 48600
 ];
 
-$planValue = $plans[$planId] ?? $plans[1];
+$planValue = $plans[$planId] ?? $plans[2];
+$voucher = $config['plansVouchers'][$planValue] ?? 0;
 
 try {
     $query = $dbh->prepare("UPDATE users SET plan = :plan WHERE username = :username");
@@ -25,19 +26,21 @@ try {
 
     // Inserir pedidos pagamento
 
-    $query = $dbh->prepare("
+    $queryPag = $dbh->prepare("
     INSERT INTO `pedidos_pagamento`
-    (`planName`, `planValue`, `vouchers`, `username`, `status`) 
-    VALUES (:name, :value, :voucher, :username, '0')");
-    $query->bindParam(":name", $name);
-    $query->bindParam(":value", $planValue);
-    $query->bindParam(":voucher", $config['plansVouchers'][$planValue]);
-    $query->bindParam(":username", $_SESSION['username']);
-    $query->execute();
-
+    (`planName`, `planValue`, `vouchers`, `username`, `status`, `paymentDay`) 
+    VALUES (:name, :value, :voucher, :username, '0', :temp)");
+    $queryPag->bindParam(":name", $name);
+    $queryPag->bindParam(":value", $planValue, PDO::PARAM_INT);
+    $queryPag->bindParam(":voucher", $voucher, PDO::PARAM_INT);
+    $queryPag->bindParam(":username", $_SESSION['username']);
+    $queryPag->bindParam(":temp", $tempo, PDO::PARAM_INT);
+    $queryPag->execute();
+    
 
 } catch(PDOException $e)
 {
-    return $e;
+    echo $e;
 }
+$_SESSION['amountPurchase'] = $planValue;
 exit(json_encode(['message' => 'OK']));

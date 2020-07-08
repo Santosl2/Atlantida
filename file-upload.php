@@ -4,6 +4,7 @@ if(!Site::ajaxRequest()) die(header("HTTP/1.0 404 Not Found"));
 
 if(isset($_FILES['file'], $_POST['type']))
 {
+
     
     $type = Site::filter($_POST['type']) ?? 'ted';
     $time = time();
@@ -13,11 +14,12 @@ if(isset($_FILES['file'], $_POST['type']))
     try {
         move_uploaded_file($_FILES['file']['tmp_name'], $newName);
         
-        $query = $dbh->prepare("INSERT INTO `comprovante`(`fileURL`, `user`, `paymentType`, `published`) VALUES (:file,:uid, :paymentType, :pub)");
+        $query = $dbh->prepare("INSERT INTO `comprovante`(`fileURL`, `user`, `paymentType`, `published`, `paymentId`) VALUES (:file,:uid, :paymentType, :pub, :paym)");
         $query->bindParam(":file", $newName);
         $query->bindParam(":uid", $_SESSION['username']);
         $query->bindParam(":paymentType", $type);
         $query->bindParam(":pub", $time);
+        $query->bindParam(":paym", User::getUserPaymentId($_SESSION['amountPurchase']));
         $query->execute();
 
     } catch(Exception $e)

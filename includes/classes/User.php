@@ -125,6 +125,24 @@ class User {
         return $query->rowCount() > 0;
     }
 
+    
+    public static function getUserPaymentId($value = 180)
+    {
+        global $dbh;
+        try 
+        {
+        $query = $dbh->prepare("SELECT `id` FROM `pedidos_pagamento` WHERE username = :username AND status = '0' AND planValue = :value ORDER by paymentDay DESC");
+        $query->bindParam(":username", $_SESSION['username']);
+        $query->bindParam(":value", $value, PDO::PARAM_INT);
+        $query->execute();
+        } catch(Exception $e)
+        {
+            return false;
+        }
+
+        return $query->fetchAll(PDO::FETCH_ASSOC)[0]['id'] ?? 0;
+    }
+
 
     public static function updateUsed($used = 0){
         global $dbh;

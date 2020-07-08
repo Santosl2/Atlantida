@@ -16,6 +16,7 @@ class Produtos {
 
         return $query;
     }
+    
 
     public static function addProduct($name = null, $value = null, $amount = null, $weight = 0){
         global $dbh;
