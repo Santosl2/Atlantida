@@ -1,5 +1,7 @@
 <?php
 REQUIRE_ONCE __DIR__ . "/includes/core.php";
+Site::needLogin(true);
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

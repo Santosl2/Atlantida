@@ -34,6 +34,21 @@ class Produtos {
         return $query;
     }
     
+    public static function getProductsFromPayId($id = null)
+    {
+        global $dbh;
+        try {
+        $query = $dbh->prepare("SELECT * FROM user_products WHERE paymentId = :id ORDER by productAmount DESC");
+        $query->bindParam(':id', $id, PDO::PARAM_INT);
+        $query->execute();
+        } catch(Exception $e)
+        {
+            return false;
+        }
+
+        return $query;
+    }
+
 
     public static function addProduct($name = null, $value = null, $amount = null, $weight = 0){
         global $dbh;

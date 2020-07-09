@@ -33,7 +33,7 @@ try {
     $queryPag->execute();
     $_SESSION['planPayId'] = $dbh->lastInsertId();
     // Alterar plano (?)
-
+    
   
     
 

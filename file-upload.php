@@ -1,5 +1,6 @@
 <?php 
 require_once("./includes/core.php");
+
 if(!Site::ajaxRequest()) die(header("HTTP/1.0 404 Not Found"));
 
 if(isset($_FILES['file'], $_POST['type']))

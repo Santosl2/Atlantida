@@ -2,12 +2,13 @@
 REQUIRE_ONCE __DIR__ . "/includes/core.php";
 Site::needLogin(true);
 
+
 if(User::userData('plan') <= 180 && User::userData('payment_ok') != "1"){
 header("LOCATION: ./dashboard");
 exit;
 }
-
-$valuePlan = User::userData('plan') - ($config['plansVouchers'][User::userData('plan')] * $config['voucherValue']);
+$plano = User::userData('plan') !== null && User::userData('plan') > 180 ? User::userData('plan') : $_SESSION['amountPurchase'];
+$valuePlan = $plano - (@$config['plansVouchers'][$plano] * $config['voucherValue']);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
