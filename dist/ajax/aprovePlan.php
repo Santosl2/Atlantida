@@ -8,7 +8,7 @@ $stts = $_POST['stts'] ?? 0;
 
 if($planId > 0):
     if(Admin::updatePayment($planId, $stts)):
-        User::setActive(Admin::paymentData("username", $planId));
+        User::setActive(Produtos::paymentData("username", $planId), Produtos::paymentData("planValue", $planId));
     endif;
 
 endif;

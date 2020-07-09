@@ -140,11 +140,12 @@ class User {
         return true;
     }
 
-    public static function setActive($username = null){
+    public static function setActive($username = null, $planValue = 180){
         global $dbh;
         if($username == null) return false;
         try {
-            $query = $dbh->prepare("UPDATE users SET payment_ok = '1' WHERE username = :username");
+            $query = $dbh->prepare("UPDATE users SET payment_ok = '1', plan = :plan WHERE username = :username");
+            $query->bindParam(":plan", $planValue, PDO::PARAM_INT);
             $query->bindParam(":username", $username);
             $query->execute();
         } catch(PDOException $e){
@@ -170,22 +171,6 @@ class User {
         return $query->fetchAll(PDO::FETCH_ASSOC)[0]['id'] ?? 0;
     }
 
-    public static function getUserPaymentId($value = 180)
-    {
-        global $dbh;
-        try 
-        {
-        $query = $dbh->prepare("SELECT `id` FROM `pedidos_pagamento` WHERE username = :username AND status = '0' AND planValue = :value ORDER by paymentDay DESC");
-        $query->bindParam(":username", $_SESSION['username']);
-        $query->bindParam(":value", $value, PDO::PARAM_INT);
-        $query->execute();
-        } catch(Exception $e)
-        {
-            return false;
-        }
-
-        return $query->fetchAll(PDO::FETCH_ASSOC)[0]['id'] ?? 0;
-    }
     public static function updateUsed($used = 0){
         global $dbh;
         if(!self::isLogged()) return false;

@@ -8,7 +8,7 @@ class Produtos {
     public static function paymentData($data, $id = 0){
         global $dbh;
         try {
-            $query = $dbh->prepare("SELECT * FROM pedidos_pagamento WHERE id = :id");
+            $query = $dbh->prepare("SELECT * FROM planos_pagamento WHERE id = :id");
             $query->bindParam(":id", $id, PDO::PARAM_INT);
             $query->execute();
         } catch(PDOException $e)

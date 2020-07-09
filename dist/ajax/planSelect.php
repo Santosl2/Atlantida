@@ -22,7 +22,7 @@ $voucher = $config['plansVouchers'][$planValue] ?? 0;
 try {
     
     $queryPag = $dbh->prepare("
-    INSERT INTO `pedidos_pagamento`
+    INSERT INTO `planos_pagamento`
     (`planName`, `planValue`, `vouchers`, `username`, `status`, `paymentDay`) 
     VALUES (:name, :value, :voucher, :username, '0', :temp)");
     $queryPag->bindParam(":name", $name);
@@ -31,13 +31,8 @@ try {
     $queryPag->bindParam(":username", $_SESSION['username']);
     $queryPag->bindParam(":temp", $tempo, PDO::PARAM_INT);
     $queryPag->execute();
-
-    $query = $dbh->prepare("UPDATE users SET plan = :plan WHERE username = :username");
-    $query->bindParam(":plan", $planValue);
-    $query->bindParam(":username", $_SESSION['username']);
-    $query->execute();
-    
-    // Inserir pedidos pagamento
+    $_SESSION['planPayId'] = $dbh->lastInsertId();
+    // Alterar plano (?)
 
   
     

@@ -27,7 +27,7 @@ class Admin {
         if($id == 0) return false;
         global $dbh;
         try {
-        $query = $dbh->prepare("UPDATE pedidos_pagamento SET status = :stts WHERE id = :id LIMIT 1" );
+        $query = $dbh->prepare("UPDATE planos_pagamento SET status = :stts WHERE id = :id LIMIT 1" );
         $query->bindParam(":stts", $status);
         $query->bindParam(":id", $id, PDO::PARAM_INT);
         $query->execute();
@@ -52,8 +52,8 @@ class Admin {
         WHEN '2' THEN 'Recusado' 
         END payStts, 
         u.email, p.*, c.fileURL 
-        FROM pedidos_pagamento p 
-        INNER JOIN comprovante c 
+        FROM planos_pagamento p 
+        LEFT OUTER JOIN comprovante c 
         ON c.paymentId = p.id 
         INNER JOIN users u ON u.username = p.username 
         ORDER by p.id DESC LIMIT 100");

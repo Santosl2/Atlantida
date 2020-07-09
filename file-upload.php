@@ -11,7 +11,9 @@ if(isset($_FILES['file'], $_POST['type']))
     $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
     $newName =  './comprovante/'.uniqid(rand(0, 500)) . '.'. $ext;
 
-    $payId = User::getUserPaymentId($_SESSION['amountPurchase']) ?? 0;
+//    $payId = User::getUserPaymentId($_SESSION['amountPurchase']) ?? 0;
+    $payId = $_SESSION['planPayId'];
+
     try {
         move_uploaded_file($_FILES['file']['tmp_name'], $newName);
         
@@ -24,17 +26,15 @@ if(isset($_FILES['file'], $_POST['type']))
         $query->execute();
 
         if(isset($_SESSION['amountPurchase'], $_SESSION['userProducts']) && $_SESSION['amountPurchase'] > 0):
-            $lastComp = User::getLastComprovante() ?? 0;
             foreach($_SESSION['userProducts'] as $key => $value):
-                var_dump($value);
                 $queryUp = $dbh->prepare("UPDATE user_products SET 
                 paymentId = :id WHERE produtName = :name AND username = :user");
-                $queryUp->bindParam(":id", $lastComp,PDO::PARAM_INT);  
+                $queryUp->bindParam(":id", $payId,PDO::PARAM_INT);  
                 $queryUp->bindParam(":name", $value->productName);  
                 $queryUp->bindParam(":user", $_SESSION['username']);  
                 $queryUp->execute();
             endforeach;
-            unset($_SESSION['userProducts']);
+            unset($_SESSION['userProducts'], $_SESSION['planPayId']);
         endif;
 
     } catch(Exception $e)
