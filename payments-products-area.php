@@ -102,7 +102,7 @@ if(User::userData('admin') == "false")
                             </div>
                         </td>
                         <?php if($value['payStts'] == "Aguardando" || !isset($value['payStts'])):?>
-                        <td class="border-b w-5" id="teste">
+                        <td class="border-b w-5">
                             <div class="flex sm:justify-center items-center" id="fadeOutAfter">
                                 <button class="button w-24 rounded-full mr-1 mb-2 bg-theme-9 text-white" id="submit"
                                     data-id="<?= $value['paymentId']?>" data-value='1'>Aceitar</button>
@@ -131,7 +131,6 @@ if(User::userData('admin') == "false")
     <script type="text/javascript">
     $(document).ready(function() {
         $(document).on('click', '#submit', function(e) {
-            $("#teste").fadeOut('fast');
             let id = $(this).data('id');
             let stts = $(this).data('value');
             var formData = new FormData();

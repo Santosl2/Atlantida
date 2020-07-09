@@ -38,7 +38,7 @@ $page = $_SERVER['REQUEST_URI'] ?? $_SERVER['PHP_SELF'];
         <?php 
         if(User::userData('admin') == "true"):
         ?>
-         <li>
+        <li>
             <a href="payments-products-area" class="menu">
                 <div class="menu__icon"><i data-feather="inbox"></i></div>
                 <div class="menu__title"> Pedidos Produtos</div>
@@ -50,6 +50,14 @@ $page = $_SERVER['REQUEST_URI'] ?? $_SERVER['PHP_SELF'];
                 <div class="menu__title"> Pedidos Planos</div>
             </a>
         </li>
+
+        <li>
+            <a href="vouchers" class="menu">
+                <div class="menu__icon"><i data-feather="inbox"></i></div>
+                <div class="menu__title"> Vouchers</div>
+            </a>
+        </li>
+
         <?php endif;?>
     </ul>
 </div>
@@ -101,6 +109,12 @@ $page = $_SERVER['REQUEST_URI'] ?? $_SERVER['PHP_SELF'];
                 </a>
             </li>
 
+            <li>
+            <a href="vouchers" class="side-menu">
+                <div class="side-menu__icon"><i data-feather="inbox"></i></div>
+                <div class="side-menu__title"> Vouchers</div>
+            </a>
+        </li>
             <?php endif;?>
 
 

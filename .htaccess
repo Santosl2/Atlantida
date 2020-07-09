@@ -7,6 +7,7 @@ RewriteRule ^planos$ planos.php
 RewriteRule ^dashboard$ dashboard.php
 RewriteRule ^pagamento$ pagamento.php
 RewriteRule ^produtos$ produtos.php
+RewriteRule ^vouchers$ vouchers.php
 RewriteRule ^file-upload$ file-upload.php
 RewriteRule ^first-plan$ first-plan.php
 RewriteRule ^payments-plans-area$ payments-plans-area.php
