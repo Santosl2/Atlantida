@@ -3,6 +3,23 @@ if(!defined('ATLANTIDA_GLOBAL')) header("HTTP/1.0 403 Forbidden");
 
 class Produtos {
 
+
+
+    public static function paymentData($data, $id = 0){
+        global $dbh;
+        try {
+            $query = $dbh->prepare("SELECT * FROM pedidos_pagamento WHERE id = :id");
+            $query->bindParam(":id", $id, PDO::PARAM_INT);
+            $query->execute();
+        } catch(PDOException $e)
+        {
+           return false;
+        }
+            
+        return $query->fetchAll(PDO::FETCH_ASSOC)[0][$data] ?? null;
+
+    }
+
     public static function getAll()
     {
         global $dbh;

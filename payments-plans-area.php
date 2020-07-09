@@ -86,8 +86,10 @@ if(User::userData('admin') == "false")
                             </center>
                         </td>
                         <td class="w-40 border-b">
-                            <div class="flex items-center sm:justify-center"><?=$value['payStts'];?></div>
+                            <div class="flex items-center sm:justify-center"><?=$value['payStts'] ?? "Aguardando";?></div>
                         </td>
+                        <?php if($value['payStts'] == "Aguardando" || !isset($value['payStts'])):?>
+                            
                         <td class="border-b w-5">
                             <div class="flex sm:justify-center items-center">
                                 <button class="button w-24 rounded-full mr-1 mb-2 bg-theme-9 text-white"
@@ -96,8 +98,10 @@ if(User::userData('admin') == "false")
                                     id="accept" data-id="<?= $value['id']?>" data-value='2' data-plan="<?=$value['planValue'];?>">Recusar</button>
                             </div>
                         </td>
+                        <?php endif;?>
                        
                     </tr>
+                        <?php endforeach;endif;?>
                     
                 </tbody>
             </table>

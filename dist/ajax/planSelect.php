@@ -20,13 +20,7 @@ $planValue = $plans[$planId] ?? $plans[2];
 $voucher = $config['plansVouchers'][$planValue] ?? 0;
 
 try {
-    $query = $dbh->prepare("UPDATE users SET plan = :plan WHERE username = :username");
-    $query->bindParam(":plan", $planValue);
-    $query->bindParam(":username", $_SESSION['username']);
-    $query->execute();
-
-    // Inserir pedidos pagamento
-
+    
     $queryPag = $dbh->prepare("
     INSERT INTO `pedidos_pagamento`
     (`planName`, `planValue`, `vouchers`, `username`, `status`, `paymentDay`) 
@@ -37,6 +31,15 @@ try {
     $queryPag->bindParam(":username", $_SESSION['username']);
     $queryPag->bindParam(":temp", $tempo, PDO::PARAM_INT);
     $queryPag->execute();
+
+    $query = $dbh->prepare("UPDATE users SET plan = :plan WHERE username = :username");
+    $query->bindParam(":plan", $planValue);
+    $query->bindParam(":username", $_SESSION['username']);
+    $query->execute();
+    
+    // Inserir pedidos pagamento
+
+  
     
 
 } catch(PDOException $e)

@@ -73,12 +73,14 @@ if(User::userData('admin') == "false")
                 <td class="w-40 border-b">
                     <div class="flex items-center sm:justify-center"><?= $value['payStts'] ?? "Aguardando";?></div>
                 </td>
-                <td class="border-b w-5">
-                    <div class="flex sm:justify-center items-center">
+                <?php if($value['payStts'] == "Aguardando" || !isset($value['payStts'])):?>
+                <td class="border-b w-5" id="teste">
+                    <div class="flex sm:justify-center items-center" id="fadeOutAfter">
                         <button class="button w-24 rounded-full mr-1 mb-2 bg-theme-9 text-white" id="submit" data-id="<?= $value['paymentId']?>" data-value='1'>Aceitar</button>
                         <button class="button w-24 rounded-full mr-1 mb-2 bg-theme-6 text-white" id="submit" data-id="<?= $value['paymentId']?>" data-value='2'>Recusar</button>
                     </div>
                 </td>
+                <?php endif;?>
                
             </tr>
             <?php endforeach;endif;?>
@@ -94,7 +96,7 @@ if(User::userData('admin') == "false")
 <script type="text/javascript">
     $(document).ready(function() {
         $(document).on('click', '#submit', function(e) {
-            
+            $("#teste").fadeOut('fast');
            let id = $(this).data('id');
             let stts = $(this).data('value');
            var formData = new FormData();
@@ -103,6 +105,7 @@ if(User::userData('admin') == "false")
             axios.post('./dist/ajax/aproveProducts.php', formData, optionsAxios)
             .then((response)=>{
                 $("#alert").fadeIn();
+                
                 setTimeout(function(){
                     document.location.reload(true);
                 }, 2000);

@@ -9,7 +9,7 @@ $plan = $_POST['plan'] ?? 180;
 
 if($planId > 0):
     if(Admin::updatePaymentProducts($planId, $stts)):
-        User::setPlan($plan, Admin::paymentData("username", $planId));
+        User::setPlan($plan, Produtos::paymentData("username", $planId));
     endif;
 
 endif;
