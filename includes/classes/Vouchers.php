@@ -16,12 +16,73 @@ class Vouchers{
         self::$voucherValue = $voucher;
     }
 
-    public static function canUseVoucher($code = null){
+    public static function voucherId()
+    {
         global $dbh;
 
-        if($code == null) return false;
+        if(self::$voucherCode == null) return true;
 
-        
+        try {
+            $query = $dbh->prepare("SELECT 
+            id FROM vouchers 
+            WHERE voucherCode = :code");
+            $query->bindParam(":code", self::$voucherCode, PDO::PARAM_STR);
+            $query->execute();
+        }
+        catch(PDOException $e)
+        {
+            return false;
+        }
+
+         return $query->fetchAll(PDO::FETCH_ASSOC)[0]['id'] ?? false;
+
+    }
+
+    public static function useVoucher(){
+        global $dbh;
+
+        if(!self::canUseVoucher()) return false;
+        $tmp = time();
+        try {
+            $query = $dbh->prepare("UPDATE vouchers SET status = '2' WHERE voucherCode = :code");
+            $query->bindParam(":code", self::$voucherCode, PDO::PARAM_STR);
+            $query->execute();
+
+            $id = self::voucherId();
+            $queUse = $dbh->prepare('INSERT INTO 
+            vouchers_logs 
+            VALUES (:user, :id, :usedt)');
+            $queUse->bindParam(":user", $_SESSION['username'], PDO::PARAM_STR);
+            $queUse->bindParam(":id", $id, PDO::PARAM_INT);
+            $queUse->bindParam(":usedt", $tmp, PDO::PARAM_INT);
+            $queUse->execute();
+        }
+        catch(PDOException $e)
+        {
+            return false;
+        }
+
+        return true;
+
+    }
+
+    public static function canUseVoucher(){
+        global $dbh;
+
+        if(self::$voucherCode == null) return false;
+
+        try {
+            $query = $dbh->prepare("SELECT id FROM vouchers 
+            WHERE status = '1' AND voucherCode = :code ");
+            $query->bindParam(":code", self::$voucherCode, PDO::PARAM_STR);
+            $query->execute();
+        }
+        catch(PDOException $e)
+        {
+            return false;
+        }
+
+         return $query->rowCount() > 0;
     }
 
     public static function getAllVouchers()
@@ -45,6 +106,9 @@ class Vouchers{
     public static function createVoucher(){
         global $dbh;
         $tmp = time();
+
+        if(!self::canUseVoucher(self::$voucherCode)) return false;
+
         try {
             $query =  $dbh->prepare("INSERT INTO 
             `vouchers`(
@@ -67,5 +131,4 @@ class Vouchers{
 
     }
 }
-
 ?>

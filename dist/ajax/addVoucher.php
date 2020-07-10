@@ -13,7 +13,7 @@ if($voucherCode != null):
     Vouchers::setVoucherCode($voucherCode);
 
     if(!Vouchers::createVoucher()):
-        exit(json_encode(['message' => "Erro ao tentar criar voucher."]));
+        exit(json_encode(['message' => "Erro ao tentar criar voucher. Talvez ele já exista."]));
     endif;
 
     exit(json_encode(['message' => "OK"]));

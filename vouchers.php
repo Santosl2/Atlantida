@@ -108,17 +108,16 @@ if(User::userData('admin') == "false")
         $(document).on('submit', 'form', function(e) {
             e.preventDefault();
             var code = $("#voucher").val();
+
             var formData = new FormData();
             formData.append('code', code);
+
             axios.post('./dist/ajax/addVoucher.php', formData, optionsAxios)
                 .then((response) => {
-                    if(response.data.message == "OK")
-                    document.location.reload(true);
-                    $("#alert").text(response.data.message);
-
+                    if(response.data.message == "OK") document.location.reload(true);
                     
-
-                    $("#alert").fadeIn();
+                    $("#alert").fadeIn().text(response.data.message);
+                    $("#voucher").val("");
                 });
 
         });

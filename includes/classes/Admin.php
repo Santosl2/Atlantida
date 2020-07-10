@@ -89,11 +89,6 @@ class Admin {
         }
 
         return $query;
-    }
-
-
-    
-
-    
-    }
+    } 
+}
 ?>
