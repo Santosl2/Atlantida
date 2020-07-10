@@ -10,7 +10,7 @@ usleep(700000);
 $voucherCode = $_POST['code'] ?? null;
 if($voucherCode != null):
     $voucherCode = filter_var($voucherCode, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
-    Vouchers::setVoucherCode($voucherCode);
+    Vouchers::setVoucherCode(strtoupper($voucherCode));
 
     if(!Vouchers::createVoucher()):
         exit(json_encode(['message' => "Erro ao tentar criar voucher. Talvez ele já exista."]));

@@ -79,18 +79,20 @@ if(User::userData('payment_ok') == "1")
                     data-value="1">SELECIONAR</button>
 
                 <div class="flex justify-center">
-                
+
                     <form method="POST" action="" id="voucher">
                         <input type="text" class="input border mt-2" id="code" style="margin-right: 5px"
                             placeholder="EX: DYUDWGDG32">
-                        <button type="submit" class="button bg-theme-1 text-white mt-5" id="preloaderBtn" data-back="Usar Voucher">Usar
+                        <button type="submit" class="button bg-theme-1 text-white mt-5" id="preloaderBtn"
+                            data-back="Usar Voucher">Usar
                             Voucher</button>
                     </form>
                 </div>
-                <br/>
-                    <hr/>
-                <br/>
-                <div class="rounded-md px-5 py-4 mb-2 bg-theme-6 text-white" id="alert" style="display:none">Sucesso!</div>
+                <br />
+                <hr />
+                <br />
+                <div class="rounded-md px-5 py-4 mb-2 bg-theme-6 text-white" id="alert" style="display:none">Sucesso!
+                </div>
 
             </div>
         </div>
@@ -103,18 +105,18 @@ if(User::userData('payment_ok') == "1")
     <script type="text/javascript">
     $(document).ready(function() {
 
-        $(document).on('click', 'button[type=button]', function(){
+        $(document).on('click', 'button[type=button]', function() {
             var planId = $(this).attr('data-value');
             const Form = new FormData();
             const planName = $(this).prev().prev().prev().prev().text().trim();
-            
+
             Form.append("planId", planId);
             Form.append("planName", planName);
             axios.post('./dist/ajax/planSelect.php', Form, optionsAxios)
-            .then((data)=>{
-                window.location.href="./pagamento";
-            });
-        }); 
+                .then((data) => {
+                    window.location.href = "./pagamento";
+                });
+        });
 
         $(document).on('submit', 'form#voucher', function(e) {
             e.preventDefault();
@@ -125,15 +127,19 @@ if(User::userData('payment_ok') == "1")
 
             axios.post('./dist/ajax/useVoucher.php', formData, optionsAxios)
                 .then((response) => {
-                    if (response.data.message == "OK"){
+                    if (response.data.message == "OK") {
 
-                        setTimeout(function(){
+                        if ($("#alert").hasClass("bg-theme-6")) {
+                            $("#alert").removeClass('bg-theme-6').addClass('bg-theme-9');
+                        }
+
+                        setTimeout(function() {
                             document.location.href = "./dashboard";
                         }, 2000);
-                        
+
                         $("#alert").fadeIn().text("Seu plano foi ativo com sucesso!");
                         return;
-                    } 
+                    }
 
                     $("#alert").fadeIn().text(response.data.message);
                     $("#code").val("");

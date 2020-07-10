@@ -25,7 +25,7 @@ class Vouchers{
         try {
             $query = $dbh->prepare("SELECT 
             id FROM vouchers 
-            WHERE voucherCode = :code");
+            WHERE voucherCode LIKE BINARY :code");
             $query->bindParam(":code", self::$voucherCode, PDO::PARAM_STR);
             $query->execute();
         }
@@ -44,7 +44,7 @@ class Vouchers{
         if(!self::canUseVoucher()) return false;
         $tmp = time();
         try {
-            $query = $dbh->prepare("UPDATE vouchers SET status = '2' WHERE voucherCode = :code");
+            $query = $dbh->prepare("UPDATE vouchers SET status = '2' WHERE voucherCode LIKE BINARY :code");
             $query->bindParam(":code", self::$voucherCode, PDO::PARAM_STR);
             $query->execute();
 
@@ -73,7 +73,7 @@ class Vouchers{
 
         try {
             $query = $dbh->prepare("SELECT id FROM vouchers 
-            WHERE status = '1' AND voucherCode = :code ");
+            WHERE status = '1' AND voucherCode LIKE BINARY :code ");
             $query->bindParam(":code", self::$voucherCode, PDO::PARAM_STR);
             $query->execute();
         }
@@ -107,7 +107,7 @@ class Vouchers{
         global $dbh;
         $tmp = time();
 
-        if(!self::canUseVoucher(self::$voucherCode)) return false;
+        if(self::canUseVoucher(self::$voucherCode)) return false;
 
         try {
             $query =  $dbh->prepare("INSERT INTO 
