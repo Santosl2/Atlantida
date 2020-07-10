@@ -51,15 +51,11 @@ CREATE TABLE IF NOT EXISTS `produtos` (
   `peso` varchar(50) NOT NULL DEFAULT '100g',
   `preco` double(11,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela projeto.produtos: ~3 rows (aproximadamente)
+-- Copiando dados para a tabela projeto.produtos: ~0 rows (aproximadamente)
 DELETE FROM `produtos`;
 /*!40000 ALTER TABLE `produtos` DISABLE KEYS */;
-INSERT INTO `produtos` (`id`, `nome`, `peso`, `preco`) VALUES
-	(1, 'Reuma Plus ', '500ml', 189.00),
-	(2, 'Black Coffee ', '300g', 128.00),
-	(3, 'Cereal Milk - Vegano ', '300g', 140.00);
 /*!40000 ALTER TABLE `produtos` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela projeto.users
@@ -78,14 +74,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `payment_ok` enum('0','1') DEFAULT '0',
   `admin` enum('true','false') DEFAULT 'false',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela projeto.users: ~2 rows (aproximadamente)
+-- Copiando dados para a tabela projeto.users: ~3 rows (aproximadamente)
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `plan`, `plan_used`, `username`, `password`, `real_name`, `email`, `cpf`, `person_type`, `security_code`, `indicator_id`, `payment_ok`, `admin`) VALUES
-	(1, 720, 3278, 'Santosl2c', '$2y$10$PavUddDqxih46ep8ISEiG.uiK8t6.0xxGv3PQ5jIHCNUv7G5HWqpC', 'Eric', 'mfilype2019@gmail.com', '000.000.000-00', 'Fisica', '$2y$10$AMLlHiAR8eT9uGRPUv8MgeZmL0pWqrg2czVsxY5iwfH', 0, '1', 'true'),
-	(2, 0, 0, 'Santosl2cf', '$2y$10$8tZ.6od4MuHMY4B0a.GcdurtnDxufqOcfygKFNrKiczMHPVN0QXiu', 'Matheus Filype B. Campos', 'hello@live.com', '000.000.000-00', 'Juridica', '$2y$10$iy4epL8yEPYRBUgeYyUcqOOyqFbFhwdSDXnaOB6LO0J', 0, '0', 'false');
+	(1, 180, 4895, 'Santosl2c', '$2y$10$PavUddDqxih46ep8ISEiG.uiK8t6.0xxGv3PQ5jIHCNUv7G5HWqpC', 'Eric', 'mfilype2019@gmail.com', '000.000.000-00', 'Fisica', '$2y$10$AMLlHiAR8eT9uGRPUv8MgeZmL0pWqrg2czVsxY5iwfH', 0, '1', 'true'),
+	(2, 0, 0, 'Santosl2cf', '$2y$10$8tZ.6od4MuHMY4B0a.GcdurtnDxufqOcfygKFNrKiczMHPVN0QXiu', 'Matheus Filype B. Campos', 'hello@live.com', '000.000.000-00', 'Juridica', '$2y$10$iy4epL8yEPYRBUgeYyUcqOOyqFbFhwdSDXnaOB6LO0J', 0, '0', 'false'),
+	(3, 180, 14900, 'Santosl2c88', '$2y$10$HeiZxjmJQUjIiYuImv6Y1OXCWA4yTpls1gdBjpCKRPSqG4.4dGg4K', 'Matheus Filype B. Campos', 'kingsantosl2c@gmail.com', '000.000.000-00', 'Juridica', '$2y$10$Ine/zzZ8y5Rkuown3w1SOOYyCeJDhr29AcXNS42L6f.', 0, '0', 'false');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela projeto.user_products
@@ -103,6 +100,33 @@ CREATE TABLE IF NOT EXISTS `user_products` (
 DELETE FROM `user_products`;
 /*!40000 ALTER TABLE `user_products` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_products` ENABLE KEYS */;
+
+-- Copiando estrutura para tabela projeto.vouchers
+CREATE TABLE IF NOT EXISTS `vouchers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `voucherCode` varchar(50) DEFAULT 'ABC123',
+  `addedTime` int(11) DEFAULT NULL,
+  `voucherValue` int(11) DEFAULT NULL,
+  `status` enum('1','2') DEFAULT '1' COMMENT '0 => Ativo 1 => Resgatado',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela projeto.vouchers: ~0 rows (aproximadamente)
+DELETE FROM `vouchers`;
+/*!40000 ALTER TABLE `vouchers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `vouchers` ENABLE KEYS */;
+
+-- Copiando estrutura para tabela projeto.vouchers_logs
+CREATE TABLE IF NOT EXISTS `vouchers_logs` (
+  `username` varchar(50) DEFAULT 'Matheus',
+  `voucherId` int(11) DEFAULT NULL,
+  `usedTime` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela projeto.vouchers_logs: ~0 rows (aproximadamente)
+DELETE FROM `vouchers_logs`;
+/*!40000 ALTER TABLE `vouchers_logs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `vouchers_logs` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
